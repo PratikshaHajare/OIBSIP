@@ -1,49 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"  rel="stylesheet">
-    <!--Boostrap CDN-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
-    
-
-    <title>To Do Web App</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--icon-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">  
+    <!--font-->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"  rel="stylesheet">
+  <!--Boostrap CDN-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <title>Todo List</title>
 </head>
 
-
-    <div class="container">
-      <div class="list-container">
-      <div class="row">
-        <div class="col text-center">
-          <h3>TO DO LIST</h3>
-
-          <div class="form-inner">
-          <!--form-->
-          <form id="todoform">
+<body>
+  <div class="container">
+    <div class="list-container">
+    <div class="row">
+      <div class="col">
+        <h3>TO DO LIST</h3>
+ 
+         <div class="todo-inner">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter Task" id="addtask">
-              <input type="hidden" id="saveindex">
-              <button class="btn btn-primary" id="addtaskbtn">Add Item</button>
-              <button class="btn btn-primary" id="savetaskbtn" style="display:none;">Save Item</button>
+                <input type="text" class="form-control" placeholder="Enter task" id="addtaskinput" />
+                <input type="hidden" id="saveindex">
+              <button class="btn btn-primary" id="addbtn">Add Item</button>
+              <button class="btn btn-primary" id="savebtn" style="display:none;">Save Item</button>
             </div>
-            <div id="err" class="invalid"></div>
-          </form><!--form-->
+            <div class="to-do-output">
+              <table class="table" id="addtasklist">
+              </table>
+            </div>
+          </div>
         </div>
-
-        <div class="to-do-output">          
-          <ul class="list-group" id="addedtasklist">   
-        
-          </ul>
-        </div>
-      
+      </div>
     </div>
-    </div> 
-    </div><!--list-container-->
-    </div><!---container-->
-    <script src="js/script 2.js"></script>
+  </section>
+  <script src="js/script.js"></script>
 </body>
+
 </html>

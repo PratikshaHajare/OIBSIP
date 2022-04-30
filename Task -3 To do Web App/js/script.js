@@ -1,20 +1,20 @@
 displayList();
-let addTask = document.getElementById("addtask");
-let addBtn = document.getElementById("addbtn");
+let addtaskinput = document.getElementById("addtaskinput");
+let addbtn = document.getElementById("addbtn");
 
-addBtn.addEventListener("click", function(){
-    addTaskval = addTask.value;
-    if(addTaskval.trim()!=0){
+addbtn.addEventListener("click", function(){
+    addtaskinputval = addtaskinput.value;
+    if(addtaskinputval.trim()!=0){
         let task = localStorage.getItem("todo");
         if(task == null){
-            todolist = [];
+            todoList = [];
         }
         else{
-            todolist = JSON.parse(task);
+            todoList = JSON.parse(task);
         }
-        todolist.push({'task_name':addTaskval, 'completeStatus':false});
-        localStorage.setItem("todo", JSON.stringify(todolist));
-        addTask.value = '';
+        todoList.push({'task_name':addtaskinputval, 'completeStatus':false});
+        localStorage.setItem("todo", JSON.stringify(todoList));
+        addtaskinput.value = '';
     }
     displayList();
 })
@@ -23,123 +23,94 @@ addBtn.addEventListener("click", function(){
 function displayList(){
     let task = localStorage.getItem("todo");
     if(task == null){
-        todolist = [];
+        todoList = [];
     }
     else{
-        todolist = JSON.parse(task);
+        todoList = JSON.parse(task);
     }
     let html = '';
-    
-    let addtaskList = document.getElementById("tasklist");
-    todolist.forEach((item, index) => {
+    let addtasklist = document.getElementById("addtasklist");
+    todoList.forEach((item, index) => {
 
         if(item.completeStatus==true){
-            taskCompleteValue = `<span class="completed">${item.task_name}</span>`;
+            taskCompleteValue = `<td class="completed">${item.task_name}</td>`;
         }else{
-            taskCompleteValue = `<span>${item.task_name}</span>`;
+            taskCompleteValue = `<td>${item.task_name}</td>`;
         }
-        html += `<li class="list-group-item d-flex justify-content-between align-items-center" >
-        <span>${item}</span>
-        ${taskCompleteValue}
-        <span>
-        <i class="fa-solid fa-pen" id="edit" onclick="editlist(${index})"></i>
-              <i class="fa-solid fa-circle-check"></i>
-              <i class="fa-solid fa-trash" onclick="removelist(${index})"></i>
-        </span>
-    </li>`;
+        html += `<tr>
+                    ${taskCompleteValue}
+                    <td><i class="fa-solid fa-pen" onclick="editItem(${index})"></i>
+                    <button type="button" class="text-success" id=${index}><i class="fa-solid fa-circle-check"></i>Complete</button>
+                    <i class="fa-solid fa-trash" onclick="deleteitem(${index})"></i>
+                    </td>
+                </tr>`;
     });
-    addtaskList.innerHTML = html;
+    addtasklist.innerHTML = html;
 }
 
-// edittask
-function edittask(index){
+// editItem
+function editItem(index){
     let saveindex = document.getElementById("saveindex");
-    let addBtn = document.getElementById("addbtn");
+    let addbtn = document.getElementById("addbtn");
     let savebtn = document.getElementById("savebtn");
     saveindex.value = index;
     let task = localStorage.getItem("todo");
-    let todolist = JSON.parse(task); 
+    let todoList = JSON.parse(task); 
     
-    addTask.value = todolist[index]['task_name'];
-    addBtn.style.display="none";
+    addtaskinput.value = todoList[index]['task_name'];
+    addbtn.style.display="none";
     savebtn.style.display="block";
 }
 
 // savetask
 let savebtn = document.getElementById("savebtn");
 savebtn.addEventListener("click", function(){
-    let addBtn = document.getElementById("addbtn");
+    let addbtn = document.getElementById("addbtn");
     let task = localStorage.getItem("todo");
-    let todolist = JSON.parse(task); 
+    let todoList = JSON.parse(task); 
     let saveindex = document.getElementById("saveindex").value;
     
-    for (keys in todolist[saveindex]) {
+    for (keys in todoList[saveindex]) {
         if(keys == 'task_name'){
-            todolist[saveindex].task_name = addTask.value;
+            todoList[saveindex].task_name = addtaskinput.value;
         }
       }
     savebtn.style.display="none";
-    addBtn.style.display="block";
-    localStorage.setItem("todo", JSON.stringify(todolist));
-    addTask.value='';
+    addbtn.style.display="block";
+    localStorage.setItem("todo", JSON.stringify(todoList));
+    addtaskinput.value='';
     displayList();
 })
 
-// removelist
-function removelist(index){
+
+// deleteitem
+function deleteitem(index){
     let task = localStorage.getItem("todo");
-    let todolist = JSON.parse(task);
-    todolist.splice(index, 1);
-    localStorage.setItem("todo", JSON.stringify(todolist));
+    let todoList = JSON.parse(task);
+    todoList.splice(index, 1);
+    localStorage.setItem("todo", JSON.stringify(todoList));
     displayList();
 }
 
-
 // complete task
-let addtaskList = document.getElementById("tasklist");
-    addtaskList.addEventListener("click", function(e){
-        let task = localStorage.getItem("todo");
-        let todolist = JSON.parse(task);
+let addtasklist = document.getElementById("addtasklist");
+    addtasklist.addEventListener("click", function(e){
+       let task = localStorage.getItem("todo");
+        let todoList = JSON.parse(task);
         
         let mytarget = e.target;
         if(mytarget.classList[0] === 'text-success'){
-        let mytargetid = mytarget.getAttribute("id");          
-        
+        let mytargetid = mytarget.getAttribute("id");
         mytargetpresibling = mytarget.parentElement.previousElementSibling.previousElementSibling;
-            for (keys in todolist[mytargetid]) {
-                if(keys == 'completeStatus' && todolist[mytargetid][keys]==true){
-                    todolist[mytargetid].completeStatus = false;
-                }else if(keys == 'completeStatus' && todolist[mytargetid][keys]==false){
-                    todolist[mytargetid].completeStatus = true;
+            for (keys in todoList[mytargetid]) {
+                if(keys == 'completeStatus' && todoList[mytargetid][keys]==true){
+                    todoList[mytargetid].completeStatus = false;
                 }
-              }        
-        localStorage.setItem("todo", JSON.stringify(todolist));
+                else if(keys == 'completeStatus' && todoList[mytargetid][keys]==false){
+                    todoList[mytargetid].completeStatus = true;
+                }
+              }
+        localStorage.setItem("todo", JSON.stringify(todoList));
         displayList();
     }
     })
-
-    
-
-
-/*
-// deleteall
-let deleteallbtn = document.getElementById("deleteallbtn");
-deleteallbtn.addEventListener("click", function(){
-    let savebtn = document.getElementById("savebtn");
-    let addBtn = document.getElementById("addbtn");
-    let task = localStorage.getItem("todo");
-    let todolist = JSON.parse(task);
-    if(task == null){
-        todolist = [];
-    }
-    else{
-        todolist = JSON.parse(task);
-        todolist = [];
-    }
-    savebtn.style.display="none";
-    addBtn.style.display="block";
-    localStorage.setItem("todo", JSON.stringify(todolist));
-    displayList();
-
-})
-*/
